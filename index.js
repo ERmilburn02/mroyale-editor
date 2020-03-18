@@ -1,20 +1,25 @@
 const { app, BrowserWindow } = require('electron')
+const { autoUpdater } = require("electron-updater")
 
+autoUpdater.checkForUpdatesAndNotify()
+
+let win;
 function createWindow () {
   // Create the browser window.
-  const win = new BrowserWindow({
+  win = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
       nodeIntegration: true
     }
   })
+  win.setMenu(null);
 
   // and load the index.html of the app.
   win.loadFile('index.html')
 
   // Open the DevTools.
-  win.webContents.openDevTools()
+  // win.webContents.openDevTools()
 }
 
 // This method will be called when Electron has finished
@@ -41,3 +46,25 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+const DiscordRPC = require('discord-rpc');
+const clientId = '689401743221588042';
+const rpc = new DiscordRPC.Client({transport: 'ipc'});
+const startTimestamp = new Date();
+async function setActivity() {
+  if (!rpc || !win) {
+    return;
+  };
+  rpc.setActivity({
+    details: 'Editing a level',
+    startTimestamp,
+    instance: false,
+  });
+};
+rpc.on('ready', () => {
+  setActivity();
+    // activity can only be set every 15 seconds
+    setInterval(() => {
+      setActivity();
+    }, 15e3);
+});
+rpc.login({ clientId }).catch(console.error);

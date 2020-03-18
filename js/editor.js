@@ -1,8 +1,8 @@
 const {remote} = require('electron');
 const fs = require('fs');
-let w1 = JSON.parse(fs.readFileSync('src/examples/world-1.json'));
-let wl1 = JSON.parse(fs.readFileSync('src/examples/world-lost1.json'));
-let wp = JSON.parse(fs.readFileSync('src/examples/world-p.json'));
+let w1 = JSON.parse(fs.readFileSync('resources/examples/world-1.json'));
+let wl1 = JSON.parse(fs.readFileSync('resources/examples/world-lost1.json'));
+let wp = JSON.parse(fs.readFileSync('resources/examples/world-p.json'));
 
 const emptyTile = 30;
 var util = {},
