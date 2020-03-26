@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron')
+const { Menu, app, BrowserWindow } = require('electron')
 const { autoUpdater } = require("electron-updater")
 
 autoUpdater.checkForUpdatesAndNotify()
@@ -13,7 +13,24 @@ function createWindow () {
       nodeIntegration: true
     }
   })
-  win.setMenu(null);
+  const template = [
+    {
+      label: 'View',
+      submenu: [
+        { role: 'reload' },
+        { role: 'forcereload' },
+        { role: 'toggledevtools' },
+        { type: 'separator' },
+        { role: 'resetzoom' },
+        { role: 'zoomin' },
+        { role: 'zoomout' },
+        { type: 'separator' },
+        { role: 'togglefullscreen' }
+      ]
+    }
+  ]
+  const menu = Menu.buildFromTemplate(template)
+  win.setMenu(menu);
 
   // and load the index.html of the app.
   win.loadFile('index.html')
