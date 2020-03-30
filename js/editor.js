@@ -1395,7 +1395,8 @@ function ZoneTool(editor) {
     this.showLevelStart = true;
 }
 ZoneTool.prototype.addLayer = function() {
-    var z = parseInt(window.prompt("Z (negative=background, positive=foreground)"));
+    // var z = parseInt(window.prompt("Z (negative=background, positive=foreground)"));
+    var z = parseInt(document.getElementById('editor-tool-zone-layer-id').value);
     if (z === 0) return alert("must not be zero");
     if (!z) return alert("invalid value");
     if (!this.zone.layers) this.zone.layers = [];
