@@ -1397,12 +1397,12 @@ function ZoneTool(editor) {
 ZoneTool.prototype.addLayer = function() {
     // var z = parseInt(window.prompt("Z (negative=background, positive=foreground)"));
     var z = parseInt(document.getElementById('editor-tool-zone-layer-id').value);
-    if (z === 0) return alert("must not be zero");
-    if (!z) return alert("invalid value");
+    if (z === 0) return remote.dialog.showMessageBoxSync({type: "error", message: "Must not be 0!"});
+    if (!z) return remote.dialog.showMessageBoxSync({type: "error", message: "Invalid value"});
     if (!this.zone.layers) this.zone.layers = [];
     var i=0;
     for (; i<this.zone.layers.length; ++i) {
-        if (this.zone.layers[i].z == z) return alert("there is already a layer with the Z value "+z);
+        if (this.zone.layers[i].z == z) return remote.dialog.showMessageBoxSync({type: "error", message: `There is already a layer with the Z value ${z}.`});
         if (this.zone.layers[i].z > z) break;
     }
     var layer = {"z":z};
@@ -1414,24 +1414,24 @@ ZoneTool.prototype.addLayer = function() {
 }
 ZoneTool.prototype.deleteLayer = function() {
     var z = app.editor.currentLayer.z;
-    if (z == 0) return alert("can't delete the primary layer");
-    if (!z) return alert("no layer selected?!");
+    if (z == 0) return remote.dialog.showMessageBoxSync({type: "error", message: "Can't delete the primary layer"});
+    if (!z) return remote.dialog.showMessageBoxSync({type: "error", message: "no layer selected?!"});
     var i=0;
     for(; i<this.zone.layers.length; ++i) {
         if (this.zone.layers[i].z == z) break;
     }
 
-    if (i == this.zone.layers.length) return alert("non-existing layer selected?!");
-    if(!window.confirm("really delete layer "+z+"?")) return;
+    if (i == this.zone.layers.length) return remote.dialog.showMessageBoxSync({type: "error", message: "non-existing layer selected?!"});
+    if (remote.dialog.showMessageBoxSync({type: "question", message: `Really delete layer ${z}?`, buttons: ["Yes", "No"]}) == 1) return;
     this.zone.layers.splice(i,1)
     app.editor.setLayer(app.editor.currentZone.getLayer(0));
     app.menu.list.updateLayerList();
 };
 ZoneTool.prototype.resize = function() {
     var newWidth = parseInt(this.valWidth.value);
-    if (!newWidth || newWidth <= 0) return alert("width must be greater than 0");
+    if (!newWidth || newWidth <= 0) return remote.dialog.showMessageBoxSync({type: "error", message: "Width must be greater than 0"});
     var newHeight = parseInt(this.valHeight.value);
-    if (!newHeight || newHeight <= 0) return alert("height must be greater than 0");
+    if (!newHeight || newHeight <= 0) return remote.dialog.showMessageBoxSync({type: "error", message: "Height must be greater than 0"});
     for (var layer of this.zone.layers) {
         var oldData = layer.data;
         var oldWidth = oldData[0x0].length;
