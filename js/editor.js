@@ -1105,7 +1105,11 @@ function _0x3f2a38() {
         app.save();
     };
     this.btnAbout.onclick = function() {
-        window.open("https://www.youtube.com/watch?v=oHg5SJYRHA0", "_blank");
+        remote.dialog.showMessageBox({
+            "title": "About",
+            "buttons": [],
+            "message": "Original Creator: Inferno\nOffline functionality by: Eliza (ERmilburn02)"
+        });
     };
 }
 _0x3f2a38.prototype.show = function() {
