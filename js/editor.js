@@ -6620,3 +6620,11 @@ App.prototype.close = function() {
 };
 var app = new App();
 app.init();
+
+var wName = document.getElementById('editor-tool-level-name').value;
+function wNameUpdate() {
+    wName = document.getElementById('editor-tool-level-name').value;
+    console.log(wName)
+};
+setInterval(wNameUpdate, 5e3)
+setInterval(() => {ipcRenderer.send('wNameUpdate', wName)}, 10e3)
