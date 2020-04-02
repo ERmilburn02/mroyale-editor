@@ -1,4 +1,4 @@
-const { Menu, app, BrowserWindow } = require('electron')
+const { Menu, app, BrowserWindow, ipcMain } = require('electron')
 const { autoUpdater } = require("electron-updater")
 
 autoUpdater.checkForUpdatesAndNotify()
@@ -67,12 +67,18 @@ const DiscordRPC = require('discord-rpc');
 const clientId = '689401743221588042';
 const rpc = new DiscordRPC.Client({transport: 'ipc'});
 const startTimestamp = new Date();
+let wName;
+ipcMain.on('wNameUpdate', (event, arg) => {
+  wName = arg;
+  console.log(event);
+  console.log(wName);
+})
 async function setActivity() {
   if (!rpc || !win) {
     return;
   };
   rpc.setActivity({
-    details: 'Editing a level',
+    details: `Editing ${wName}`,
     startTimestamp,
     instance: false,
   });

@@ -1,8 +1,9 @@
-const {remote} = require('electron');
+const {remote, ipcRenderer} = require('electron');
 const fs = require('fs');
 let w1 = JSON.parse(fs.readFileSync('examples/world-1.json'));
 let wl1 = JSON.parse(fs.readFileSync('examples/world-lost1.json'));
 let wp = JSON.parse(fs.readFileSync('examples/world-p.json'));
+let wName;
 
 const emptyTile = 30;
 var util = {},
