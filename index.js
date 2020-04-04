@@ -70,13 +70,12 @@ const startTimestamp = new Date();
 let wName;
 ipcMain.on('wNameUpdate', (event, arg) => {
   wName = arg;
-  console.log(event);
-  console.log(wName);
 })
 async function setActivity() {
   if (!rpc || !win) {
     return;
   };
+  if (wName == undefined || wName == "") wName = "a level";
   rpc.setActivity({
     details: `Editing ${wName}`,
     startTimestamp,

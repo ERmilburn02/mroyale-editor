@@ -3,7 +3,6 @@ const fs = require('fs');
 let w1 = JSON.parse(fs.readFileSync('examples/world-1.json'));
 let wl1 = JSON.parse(fs.readFileSync('examples/world-lost1.json'));
 let wp = JSON.parse(fs.readFileSync('examples/world-p.json'));
-let wName;
 
 const emptyTile = 30;
 var util = {},
@@ -6621,10 +6620,10 @@ App.prototype.close = function() {
 var app = new App();
 app.init();
 
-var wName = document.getElementById('editor-tool-level-name').value;
+let wName;
 function wNameUpdate() {
     wName = document.getElementById('editor-tool-level-name').value;
-    console.log(wName)
+    if (wName == undefined || wName == "") wName = "a level";
 };
-setInterval(wNameUpdate, 5e3)
-setInterval(() => {ipcRenderer.send('wNameUpdate', wName)}, 10e3)
+setInterval(wNameUpdate, 5e3);
+setInterval(() => {ipcRenderer.send('wNameUpdate', wName)}, 10e3);
