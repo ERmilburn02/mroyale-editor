@@ -16,7 +16,26 @@ function createWindow() {
   const template = [
     {
       label: "File",
-      submenu: [{ role: "reload" }, { role: "forcereload" }, { role: "quit" }],
+      submenu: [
+        {
+          label: "New",
+          accelerator: "CmdOrCtrl+N",
+          enabled: false,
+          click: function () {
+            win.webContents.send("new");
+          },
+        },
+        {
+          label: "Save",
+          accelerator: "CmdOrCtrl+S",
+          click: function () {
+            win.webContents.send("save");
+          },
+        },
+        { role: "reload" },
+        { role: "forcereload" },
+        { role: "quit" },
+      ],
     },
     {
       label: "View",
