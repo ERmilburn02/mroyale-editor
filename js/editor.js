@@ -1847,6 +1847,7 @@ File.prototype.new = function () {
     type: "game",
     shortname: "",
     mode: "royale",
+    vertical: false,
     resource: [
       { id: "map", src: "img/game/smb_map.png" },
       { id: "obj", src: "img/game/smb_obj.png" },
@@ -2228,8 +2229,7 @@ function _0x3f2a38() {
     remote.dialog.showMessageBox({
       title: "About",
       buttons: [],
-      message:
-        "Original Creator: Inferno\nOffline functionality by: Eliza (ERmilburn02)",
+      message: `Original Creator: Inferno\nOffline functionality by: Eliza (ERmilburn02)\nApp version: ${remote.app.getVersion()}`,
     });
   };
 }
@@ -2351,6 +2351,7 @@ function WorldTool(editor) {
   this.element = document.getElementById("editor-tool-world");
   this.valInitial = document.getElementById("editor-tool-world-initial");
   this.valShortname = document.getElementById("editor-tool-world-shortname");
+  this.valVertical = document.getElementById("editor-tool-world-vertical");
   this.btnNew = document.getElementById("editor-tool-world-new");
   var _0x1bb7eb = this;
   this.btnApply = document.getElementById("editor-tool-world-apply");
@@ -2573,6 +2574,7 @@ WorldTool.prototype.reload = function () {
 WorldTool.prototype.load = function () {
   this.valInitial.value = this.editor.world.initial;
   this.valShortname.value = this.editor.world.shortname;
+  this.valVertical.checked = this.editor.world.vertical;
   this.element.style.display = "block";
 };
 WorldTool.prototype.save = function () {
@@ -2581,6 +2583,7 @@ WorldTool.prototype.save = function () {
     if (isNaN(initial)) throw "invalid value for initial level";
     this.editor.world.initial = initial;
     this.editor.world.shortname = this.valShortname.value;
+    this.editor.world.vertical = this.valVertical.checked;
   } catch (_0x5286c3) {
     app.menu.warn.show("Failed to parse value. Changes not applied.");
   }
@@ -10569,6 +10572,7 @@ function World(editor, data) {
   this.initial = data.initial;
   this.mode = data.mode;
   this.shortname = data.shortname;
+  this.vertical = data.vertical;
   this.levels = [];
   for (var i = 0x0; i < data.world.length; i++)
     this.levels.push(new Level(editor, data.world[i]));
@@ -10902,6 +10906,7 @@ Editor.prototype.compile = function () {
   outData.type = this.dataRaw.type;
   outData.mode = this.world.mode;
   outData.shortname = this.world.shortname;
+  outData.vertical = this.world.vertical;
   outData.resource = this.dataRaw.resource;
   outData.initial = this.world.initial;
   outData.world = [];
